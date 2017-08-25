@@ -62,12 +62,12 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="9dz-Sz-kan">
-                                <rect key="frame" x="0.0" y="567" width="375" height="100"/>
+                                <rect key="frame" x="0.0" y="559" width="375" height="100"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="100" id="Fky-YH-0LU"/>
                                 </constraints>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="c82-GZ-I4l">
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="c82-GZ-I4l">
                                     <size key="itemSize" width="50" height="50"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -75,7 +75,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" reuseIdentifier="cell" id="i6a-Gx-Czr" customClass="CustomCollectionViewCell">
-                                        <rect key="frame" x="0.0" y="0.0" width="90" height="90"/>
+                                        <rect key="frame" x="0.0" y="5" width="90" height="90"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="90" height="90"/>
@@ -103,8 +103,8 @@
                                     <outlet property="delegate" destination="aT5-xR-ogg" id="IvS-os-ibP"/>
                                 </connections>
                             </collectionView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Uf2-ix-anP">
-                                <rect key="frame" x="0.0" y="65" width="375" height="494"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Uf2-ix-anP">
+                                <rect key="frame" x="0.0" y="65" width="375" height="486"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -115,7 +115,7 @@
                             <constraint firstItem="9dz-Sz-kan" firstAttribute="leading" secondItem="4cJ-8e-nVC" secondAttribute="leading" id="UPo-MF-HBd"/>
                             <constraint firstAttribute="trailing" secondItem="Uf2-ix-anP" secondAttribute="trailing" id="dVz-7j-KLI"/>
                             <constraint firstAttribute="trailing" secondItem="9dz-Sz-kan" secondAttribute="trailing" id="dYe-5J-BaL"/>
-                            <constraint firstItem="pcf-6G-Ewa" firstAttribute="top" secondItem="9dz-Sz-kan" secondAttribute="bottom" id="rgy-us-C8o"/>
+                            <constraint firstItem="pcf-6G-Ewa" firstAttribute="top" secondItem="9dz-Sz-kan" secondAttribute="bottom" constant="8" symbolic="YES" id="rgy-us-C8o"/>
                         </constraints>
                     </view>
                     <connections>

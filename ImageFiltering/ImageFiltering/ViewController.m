@@ -19,7 +19,7 @@
     UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
     imagePicker.delegate = self;
     imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-    [self.navigationController presentViewController:imagePicker animated:YES completion:nil];
+    [self presentViewController:imagePicker animated:YES completion:nil];
 }
 
 #pragma mark - UIImagePickerControllerDelegate
@@ -29,7 +29,7 @@
     DetailViewController *detailVC = [self.storyboard instantiateViewControllerWithIdentifier:@"DetailViewController"];
     detailVC.originalImage = image;
     [self.navigationController pushViewController:detailVC animated:YES];
-    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

@@ -1,5 +1,7 @@
 #import "DetailViewController.h"
 #import "UIImage+Scale.h"
+#import "FilteringService.h"
+#import "CustomCollectionViewCell.h"
 
 typedef NS_ENUM(NSInteger, FilteringType) {
     CIPhotoEffectNone,
@@ -13,8 +15,10 @@ typedef NS_ENUM(NSInteger, FilteringType) {
     CIPhotoEffectProcess
 };
 
-static NSString * const FilteringTypesArray[] = {
-    [CIPhotoEffectNone] = @"",
+static NSInteger const CountFilteringType = 9;
+
+static NSString * const FilteringTypesArray[CountFilteringType] = {
+    [CIPhotoEffectNone] = @"CIPhotoEffectNone",
     [CIPhotoEffectMono] = @"CIPhotoEffectMono",
     [CIPhotoEffectFade] = @"CIPhotoEffectFade",
     [CIPhotoEffectChrome] = @"CIPhotoEffectChrome",
@@ -34,19 +38,52 @@ static NSString * const FilteringTypesArray[] = {
 
 @implementation DetailViewController
 
+#pragma mark - life cycle UIViewController
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.imageView.image = [UIImage imageWithImage:self.originalImage scaledToSize:self.imageView.bounds.size];
+    self.originalImage = [UIImage imageWithImage:self.originalImage scaledToSize:self.imageView.bounds.size];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Save" style:UIBarButtonItemStyleDone target:self action:@selector(save)];
+}
+
+#pragma mark - actions
+
+- (void)save {
+    [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
+        [PHAssetChangeRequest creationRequestForAssetFromImage:self.imageView.image];
+    }completionHandler:^(BOOL success, NSError *error) {
+        if(success){
+            NSLog(@"worked");
+        }else{
+            NSLog(@"Error: %@", error);
+            
+        }
+    }];
 }
 
 #pragma mark - UICollectionViewDataSource
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return 0;
+    return CountFilteringType;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return nil;
+    CustomCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
+    
+    [FilteringService filterImage:self.imageView.image effectType:FilteringTypesArray[indexPath.row] completion:^(UIImage *newImage) {
+        cell.imageView.image = newImage;
+    }];
+    
+    return cell;
+}
+
+#pragma mark - UICollectionViewDelegate
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    [FilteringService filterImage:self.originalImage effectType:FilteringTypesArray[indexPath.row] completion:^(UIImage *newImage) {
+        self.imageView.image = newImage;
+    }];
 }
 
 @end
