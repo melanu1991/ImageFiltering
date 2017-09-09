@@ -7,12 +7,30 @@
 
 @implementation FilteringService
 
+static NSOperationQueue *_operationQueue;
+
++ (NSOperationQueue *)operationQueue {
+    return _operationQueue;
+}
+
++ (void)setOperationQueue:(NSOperationQueue *)operationQueue {
+    if (_operationQueue != operationQueue) {
+        _operationQueue = operationQueue;
+    }
+}
+
 + (void)filterImage:(UIImage *)image effectType:(NSString *)effectType completion:(void(^)(UIImage *image))completion {
     
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        
+    FilteringService.operationQueue = [[NSOperationQueue alloc] init];
+    
+    NSBlockOperation *blockOperation = [[NSBlockOperation alloc] init];
+    __weak NSBlockOperation *weakBlockOperation = blockOperation;
+    [blockOperation addExecutionBlock:^{
         UIImage *newImage = image;
         if (![effectType isEqualToString:@"CIPhotoEffectNone"]) {
+            if ([weakBlockOperation isCancelled]) {
+                return;
+            }
             CIImage *inputImage = [CIImage imageWithCGImage:image.CGImage];
             CIContext *context = [CIContext contextWithOptions:nil];
             CIFilter *filter = [CIFilter filterWithName:effectType];
@@ -21,15 +39,19 @@
             CGImageRef cgimg = [context createCGImage:outputImage fromRect:[outputImage extent]];
             newImage = [UIImage imageWithCGImage:cgimg];
             CGImageRelease(cgimg);
+            if ([weakBlockOperation isCancelled]) {
+                return;
+            }
         }
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if (completion) {
+        NSOperationQueue *mainOperationQueue = [NSOperationQueue mainQueue];
+        [mainOperationQueue addOperationWithBlock:^{
+            if (completion && ![weakBlockOperation isCancelled]) {
                 completion(newImage);
             }
-        });
-        
-    });
+        }];
+    }];
+    
+    [FilteringService.operationQueue addOperation:blockOperation];
     
 }
 

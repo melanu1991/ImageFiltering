@@ -87,6 +87,7 @@ static NSString * const FilteringTypesArray[CountFilteringType] = {
 #pragma mark - UICollectionViewDelegate
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    [FilteringService.operationQueue cancelAllOperations];
     [self.activityIndicator startAnimating];
     [FilteringService filterImage:self.originalImage effectType:FilteringTypesArray[indexPath.row] completion:^(UIImage *newImage) {
         self.imageView.image = newImage;
