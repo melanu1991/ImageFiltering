@@ -106,19 +106,26 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Uf2-ix-anP">
                                 <rect key="frame" x="0.0" y="65" width="375" height="486"/>
                             </imageView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="IE6-FV-l6R">
+                                <rect key="frame" x="169" y="315" width="37" height="37"/>
+                                <color key="color" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Uf2-ix-anP" firstAttribute="top" secondItem="fEj-Sd-0FQ" secondAttribute="bottom" constant="45" id="0zA-ot-bmk"/>
+                            <constraint firstItem="IE6-FV-l6R" firstAttribute="centerY" secondItem="4cJ-8e-nVC" secondAttribute="centerY" id="DQa-fb-zEK"/>
                             <constraint firstItem="9dz-Sz-kan" firstAttribute="top" secondItem="Uf2-ix-anP" secondAttribute="bottom" constant="8" symbolic="YES" id="GQE-Yr-iIb"/>
                             <constraint firstItem="Uf2-ix-anP" firstAttribute="leading" secondItem="4cJ-8e-nVC" secondAttribute="leading" id="JcI-3F-wjp"/>
                             <constraint firstItem="9dz-Sz-kan" firstAttribute="leading" secondItem="4cJ-8e-nVC" secondAttribute="leading" id="UPo-MF-HBd"/>
+                            <constraint firstItem="IE6-FV-l6R" firstAttribute="centerX" secondItem="4cJ-8e-nVC" secondAttribute="centerX" id="aPg-vN-zWg"/>
                             <constraint firstAttribute="trailing" secondItem="Uf2-ix-anP" secondAttribute="trailing" id="dVz-7j-KLI"/>
                             <constraint firstAttribute="trailing" secondItem="9dz-Sz-kan" secondAttribute="trailing" id="dYe-5J-BaL"/>
                             <constraint firstItem="pcf-6G-Ewa" firstAttribute="top" secondItem="9dz-Sz-kan" secondAttribute="bottom" constant="8" symbolic="YES" id="rgy-us-C8o"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="IE6-FV-l6R" id="MVG-95-ftZ"/>
                         <outlet property="collectionView" destination="9dz-Sz-kan" id="5h6-A6-c2o"/>
                         <outlet property="imageView" destination="Uf2-ix-anP" id="QUl-zA-CR0"/>
                     </connections>

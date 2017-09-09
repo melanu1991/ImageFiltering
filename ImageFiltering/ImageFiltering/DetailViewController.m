@@ -31,6 +31,7 @@ static NSString * const FilteringTypesArray[CountFilteringType] = {
 
 @interface DetailViewController () <UICollectionViewDelegate, UICollectionViewDataSource>
 
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 
@@ -42,14 +43,13 @@ static NSString * const FilteringTypesArray[CountFilteringType] = {
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.imageView.image = [UIImage imageWithImage:self.originalImage scaledToSize:self.imageView.bounds.size];
-    self.originalImage = [UIImage imageWithImage:self.originalImage scaledToSize:self.imageView.bounds.size];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Save" style:UIBarButtonItemStyleDone target:self action:@selector(save)];
+    self.imageView.image = self.originalImage = [UIImage imageWithImage:self.originalImage scaledToSize:self.imageView.bounds.size];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Save image" style:UIBarButtonItemStyleDone target:self action:@selector(saveImageInPhotoLibrary)];
 }
 
 #pragma mark - actions
 
-- (void)save {
+- (void)saveImageInPhotoLibrary {
     [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
         [PHAssetChangeRequest creationRequestForAssetFromImage:self.imageView.image];
     }completionHandler:^(BOOL success, NSError *error) {
@@ -81,8 +81,10 @@ static NSString * const FilteringTypesArray[CountFilteringType] = {
 #pragma mark - UICollectionViewDelegate
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    [self.activityIndicator startAnimating];
     [FilteringService filterImage:self.originalImage effectType:FilteringTypesArray[indexPath.row] completion:^(UIImage *newImage) {
         self.imageView.image = newImage;
+        [self.activityIndicator stopAnimating];
     }];
 }
 
