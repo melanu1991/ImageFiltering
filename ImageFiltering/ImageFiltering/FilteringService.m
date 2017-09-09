@@ -1,4 +1,5 @@
 #import "FilteringService.h"
+#import <UIKit/UIKit.h>
 
 @interface FilteringService ()
 
@@ -6,7 +7,7 @@
 
 @implementation FilteringService
 
-+ (void)filterImage:(UIImage *)image effectType:(NSString *)effectType completion:(CompletionBlock)completion {
++ (void)filterImage:(UIImage *)image effectType:(NSString *)effectType completion:(void(^)(UIImage *image))completion {
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
