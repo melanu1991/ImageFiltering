@@ -69,10 +69,16 @@ static NSString * const FilteringTypesArray[CountFilteringType] = {
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    CustomCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
     
+    CustomCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
+    UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    activityIndicator.hidesWhenStopped = YES;
+    activityIndicator.color = [UIColor redColor];
+    [cell addSubview:activityIndicator];
+    [activityIndicator startAnimating];
     [FilteringService filterImage:self.imageView.image effectType:FilteringTypesArray[indexPath.row] completion:^(UIImage *newImage) {
         cell.imageView.image = newImage;
+        [activityIndicator stopAnimating];
     }];
     
     return cell;
