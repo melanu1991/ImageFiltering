@@ -7,12 +7,6 @@
 
 @implementation ViewController
 
-#pragma mark - life cycle UIViewController
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-}
-
 #pragma mark - actions
 
 - (IBAction)selectButtonPressed:(id)sender {

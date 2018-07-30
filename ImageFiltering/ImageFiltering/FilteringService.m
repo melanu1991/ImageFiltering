@@ -17,6 +17,8 @@ static NSOperationQueue *_operationQueue;
     if (_operationQueue != operationQueue) {
         _operationQueue = operationQueue;
     }
+    
+    NSLog(@"Log");
 }
 
 + (void)filterImage:(UIImage *)image effectType:(NSString *)effectType completion:(void(^)(UIImage *image))completion {
